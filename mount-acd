@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Define the path to the acd_cli cache (including oauth credentials)
+export ACD_CLI_CACHE_PATH="/.acdcli/"
+
+# Copy oauth_data into place
+mkdir -p /.acdcli/
+if [ ! -f /.acdcli/oauth_data ]; then
+    ln -s /oauth_data /.acdcli/oauth_data
+fi
+
+# Sync nodes (root node required for mount)
+/usr/local/bin/acd_cli sync
+
+# Create the directory for media if non-exists
+/usr/local/bin/acd_cli mkdir -p $ACD_ROOT
+
+# Mount acd in the foreground
+exec /usr/local/bin/acd_cli -d mount -i60 -fg /mnt/acd-encrypted
