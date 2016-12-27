@@ -13,4 +13,4 @@ done
 echo "Acd mounted - mounting encfs on top"
 
 # Mount
-exec /usr/bin/encfs -f --extpass='/bin/echo ${ENCFS_PASS}' /mnt/acd-encrypted/${ACD_ROOT} /mnt/acd-decrypted
+exec /usr/bin/encfs -f --extpass='/bin/echo ${ENCFS_PASS}' "/mnt/acd-encrypted/${ACD_ROOT}" /mnt/acd-decrypted
