@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Wait until encrypted mountpoint exists before mounting encfs
+while true ; do
+    if mount | grep -q "/mnt/acd-encrypted" ; then
+        break
+    fi
+
+    echo "Waiting for mount /mnt/acd-encrypted before mounting";
+    sleep 10
+done
+
+echo "Acd mounted - mounting encfs on top"
+
+# Mount
+exec /usr/bin/encfs -f --extpass='/bin/echo ${ENCFS_PASS}' "/mnt/acd-encrypted/${ACD_ROOT}" /mnt/acd-decrypted

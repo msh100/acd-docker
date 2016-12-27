@@ -1,7 +1,0 @@
- - Somehow document the following:
-```
-mount --bind /mnt/acd-mounts/ /mnt/acd-mounts/
-mount --make-shared /mnt/acd-mounts/
-```
- - Interval for encfs mount to update cache
- - allow_other on acd_cli fuse module

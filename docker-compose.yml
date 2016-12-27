@@ -1,41 +1,14 @@
-local-encfs:
-  build: encfs/
-  volumes:
-   - /mnt/acd-mounts/:/mnt/:shared
-  environment:
-    MOUNT_SOURCE: /mnt/local-encrypted
-    MOUNT_TARGET: /mnt/local-decrypted
-    ENCFS6_CONFIG: /mnt/local-encrypted/.encfs6.xml
-    ENCFS_PASS: $ENCFS_PASS
-  privileged: true
-
-acd-mount:
-  build: acd-cli/
-  volumes:
-   - /mnt/acd-mounts/:/mnt/:shared
-  environment:
-    ACD_CLI_CACHE_PATH: /mnt/acd_cli/
-    MOUNT_TARGET: /mnt/acd-encrypted
-  privileged: true
-
 acd-encfs:
-  build: encfs/
+  build: .
   volumes:
-   - /mnt/acd-mounts/:/mnt/:shared
+   - ../oauth_data:/oauth_data
+   - ../encfs-rev.xml:/config/encfs.xml
+   - /mnt/acd/:/mnt/acd/:shared
   environment:
-    MOUNT_SOURCE: /mnt/acd-encrypted
-    MOUNT_TARGET: /mnt/acd-decrypted
-    WAIT_FOR_MNT: /mnt/acd-encrypted
-    ENCFS6_CONFIG: /mnt/local-encrypted/.encfs6.xml
-    ENCFS_PASS: $ENCFS_PASS
-  privileged: true
-
-unionfs:
-  build: unionfs/
-  volumes:
-   - /mnt/acd-mounts/:/mnt/:shared
-  environment:
-    MOUNT_UNITE: /mnt/local-decrypted=RW:/mnt/acd-decrypted
-    MOUNT_TARGET: /mnt/union/
-    WAIT_FOR_MNT: /mnt/acd-decrypted
+    ENCFS_PASS: testing
+    ACD_ROOT: /media/
+    UID: 1010
+    GID: 1010
+    UPLOAD_INTERVAL: "30 3 * * *"
+    LOCAL_DAYS: "14"
   privileged: true

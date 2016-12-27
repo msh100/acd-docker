@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Wait until encrypted mountpoint exists before mounting encfs
+while true ; do
+    if mount | grep -q "/mnt/acd-decrypted" ; then
+        break
+    fi
+
+    echo "Waiting for mount /mnt/acd-decrypted before mounting";
+    sleep 10
+done
+
+echo "Both encfs mounts mounted - mounting unionfs"
+
+# Mount
+exec unionfs-fuse -d -o cow,allow_other,uid=${UID},gid=${GID} /mnt/local-decrypted=RW:/mnt/acd-decrypted=RO /mnt/acd/
