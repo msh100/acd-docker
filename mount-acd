@@ -13,7 +13,7 @@ fi
 /usr/local/bin/acd_cli sync
 
 # Create the directory for media if non-exists
-/usr/local/bin/acd_cli mkdir -p $ACD_ROOT
+/usr/local/bin/acd_cli mkdir -p "$ACD_ROOT"
 
 # Mount acd in the foreground
 exec /usr/local/bin/acd_cli -d mount -i60 -fg /mnt/acd-encrypted
